@@ -30,6 +30,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             bool fieldsAreFilled = true;
             if (textBoxUsuario.Text.Equals(""))
             {
+                this.labelInsiraUsuario.Text = "Insira o usuário!";
                 this.labelInsiraUsuario.Visible = true;
                 fieldsAreFilled = false;
             }
@@ -38,6 +39,7 @@ namespace CadastroSeriesWindowsFormsSQLite
 
             if (textBoxSenha.Text.Equals(""))
             {
+                this.labelInsiraSenha.Text = "Insira a senha!";
                 this.labelInsiraSenha.Visible = true;
                 fieldsAreFilled = false;
             }
@@ -47,7 +49,24 @@ namespace CadastroSeriesWindowsFormsSQLite
             if (fieldsAreFilled)
             {
                 //tentar login do usuário
-                repoUsuarios.ExecutaLogin(textBoxUsuario.Text, textBoxSenha.Text);
+                LoginOutput loginOutput = repoUsuarios.ExecutaLogin(textBoxUsuario.Text, textBoxSenha.Text);
+
+                switch (loginOutput)
+                {
+                    case LoginOutput.Succeeded:
+                        //todo implement
+                        break;
+                    case LoginOutput.UserNotFound:
+                        this.labelInsiraUsuario.Text = "Usuário não encontrado!";
+                        this.labelInsiraUsuario.Visible = true;
+                        break;
+                    case LoginOutput.WrongPassword:
+                        this.labelInsiraSenha.Text = "Senha incorreta!";
+                        this.labelInsiraSenha.Visible = true;
+                        break;
+                    default:
+                        break;
+                }
             }
 
         }

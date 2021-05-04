@@ -12,22 +12,23 @@ namespace DIO.Series
         public string usuarioLogado_username;
 
         //todo entender erro abaixo
-        private User usuarioLogado;
-        //{
-        //    get
-        //    {
-        //        return usuarioLogado;
-        //    }
-        //    set
-        //    {
-        //        usuarioLogado = value;
-        //        usuarioLogado_username = usuarioLogado.Username;
-        //    }
-        //}
+        private User _usuarioLogado;
+        public User UsuarioLogado
+        {
+            get
+            {
+                return _usuarioLogado;
+            }
+            set
+            {
+                _usuarioLogado = value;
+                usuarioLogado_username = _usuarioLogado.Username;
+            }
+        }
 
         public UserRepositorio()
         {
-            //todo load from db into list
+            // loads from db into list
             listaUsers = SqliteDataAccess.LoadUsers();
         }
 
@@ -55,27 +56,28 @@ namespace DIO.Series
         /// </summary>
         /// <param name="pListOperadores">Lista de operadores</param>
         /// <returns></returns>
-        public bool ExecutaLogin(string pUsername, string pSenha)
+        public LoginOutput ExecutaLogin(string pUsername, string pSenha)
         {
             User usuario = null;
             bool senhaCorreta = false;
-            bool loginRealizado = false;
 
             usuario = BuscaUsuario(pUsername);
             if (usuario != null)
             {
                 senhaCorreta = Password.CompararSenhas(pSenha, usuario.Salt, usuario.Senha);
             }
+            else
+                return LoginOutput.UserNotFound;
 
             if (senhaCorreta)
             {
-                this.usuarioLogado = usuario;
-                loginRealizado = true;
-
-                //todo log into log file
+                this.UsuarioLogado = usuario;
             }
-           
-            return loginRealizado;
+            else
+                return LoginOutput.WrongPassword;
+
+            //todo log into log file
+            return LoginOutput.Succeeded;
         }
 
     }
