@@ -8,11 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Properties\Settings.Designer.cs" />
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Properties\Settings.settings" />
+    <Compile Remove="Form1.cs" />
+    <Compile Remove="Form1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Form1.resx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,10 +41,6 @@
     <None Update="SQLiteDatabase.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

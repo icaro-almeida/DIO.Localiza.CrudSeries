@@ -13,7 +13,7 @@ namespace DIO.Series
 
         //todo entender erro abaixo
         private User _usuarioLogado;
-        public User UsuarioLogado
+        private User UsuarioLogado
         {
             get
             {

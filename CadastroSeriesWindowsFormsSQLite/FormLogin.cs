@@ -16,10 +16,11 @@ namespace CadastroSeriesWindowsFormsSQLite
 {
     public partial class FormLogin : Form
     {
-        private UserRepositorio repoUsuarios = new UserRepositorio();
-        private SerieRepositorio repoSeries = new SerieRepositorio();
+        internal UserRepositorio repoUsuarios = new UserRepositorio();
+        internal SerieRepositorio repoSeries = new SerieRepositorio();
         private Logger logger = LogManager.GetCurrentClassLogger();
 
+        private FormPrincipal formPrincipal;
         public FormLogin()
         {
             InitializeComponent();
@@ -28,6 +29,7 @@ namespace CadastroSeriesWindowsFormsSQLite
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             bool fieldsAreFilled = true;
+            //verifica se usuario foi inserido
             if (textBoxUsuario.Text.Equals(""))
             {
                 this.labelInsiraUsuario.Text = "Insira o usuário!";
@@ -37,6 +39,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             else
                 this.labelInsiraUsuario.Visible = false;
 
+            //verifica se a senha foi inserida
             if (textBoxSenha.Text.Equals(""))
             {
                 this.labelInsiraSenha.Text = "Insira a senha!";
@@ -54,7 +57,11 @@ namespace CadastroSeriesWindowsFormsSQLite
                 switch (loginOutput)
                 {
                     case LoginOutput.Succeeded:
-                        //todo implement
+                        this.textBoxUsuario.Text = "";
+                        this.textBoxSenha.Text = "";
+                        formPrincipal = new FormPrincipal(this);
+                        formPrincipal.Show();
+                        this.Hide();
                         break;
                     case LoginOutput.UserNotFound:
                         this.labelInsiraUsuario.Text = "Usuário não encontrado!";
