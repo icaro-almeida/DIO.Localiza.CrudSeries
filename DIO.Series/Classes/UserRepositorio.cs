@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace DIO.Series
     {
         private List<User> listaUsers = new List<User>();
         public string usuarioLogado_username;
+        private Logger logger = LogManager.GetCurrentClassLogger();
 
-        //todo entender erro abaixo
         private User _usuarioLogado;
         private User UsuarioLogado
         {
@@ -22,7 +23,10 @@ namespace DIO.Series
             set
             {
                 _usuarioLogado = value;
-                usuarioLogado_username = _usuarioLogado.Username;
+                if (_usuarioLogado != null)
+                    usuarioLogado_username = _usuarioLogado.Username;
+                else
+                    usuarioLogado_username = "";
             }
         }
 
@@ -62,22 +66,24 @@ namespace DIO.Series
             bool senhaCorreta = false;
 
             usuario = BuscaUsuario(pUsername);
-            if (usuario != null)
-            {
-                senhaCorreta = Password.CompararSenhas(pSenha, usuario.Salt, usuario.Senha);
-            }
+            if (usuario != null)            
+                senhaCorreta = Password.CompararSenhas(pSenha, usuario.Salt, usuario.Senha);            
             else
                 return LoginOutput.UserNotFound;
 
-            if (senhaCorreta)
-            {
-                this.UsuarioLogado = usuario;
-            }
+            if (senhaCorreta)            
+                this.UsuarioLogado = usuario;            
             else
                 return LoginOutput.WrongPassword;
 
             //todo log into log file
             return LoginOutput.Succeeded;
+        }
+
+        public void ExecutaLogoff()
+        {
+            logger.Trace($"Usuário {usuarioLogado_username} fez logoff;");
+            UsuarioLogado = null;
         }
 
     }

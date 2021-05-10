@@ -20,13 +20,13 @@ namespace CadastroSeriesWindowsFormsSQLite
             formLogin = pFormLogin;
             InitializeComponent();
             //preenche label com o username do usuario logado
-            this.labelUsuarioLogado.Text = pFormLogin.repoUsuarios.usuarioLogado_username;
+            this.labelUsuarioLogado.Text = formLogin.repoUsuarios.usuarioLogado_username;
         }
 
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
+            formLogin.repoUsuarios.ExecutaLogoff();
             formLogin.Show();
-            //todo - implement logoff
         }
     }
 }
