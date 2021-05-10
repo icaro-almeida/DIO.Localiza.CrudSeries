@@ -41,7 +41,7 @@ namespace DIO.Series
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <returns>True se o usuário foi encontrado</returns>
-        private User BuscaUsuario(string pUsuario)
+        public User BuscaUsuario(string pUsuario)
         {
             List<User> resultsList = this.listaUsers.FindAll(x => (x.Username == pUsuario));
             if (resultsList.Count == 0)
@@ -84,6 +84,14 @@ namespace DIO.Series
         {
             logger.Trace($"Usuário {usuarioLogado_username} fez logoff;");
             UsuarioLogado = null;
+        }
+
+        public void InsereUsuario(User pUsuarioNovo)
+        {
+            //inserts a new user into DB
+            SqliteDataAccess.SaveUser(pUsuarioNovo);            
+            // loads from db into list
+            listaUsers = SqliteDataAccess.LoadUsers();
         }
 
     }

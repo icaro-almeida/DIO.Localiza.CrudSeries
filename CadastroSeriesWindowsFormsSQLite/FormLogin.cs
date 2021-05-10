@@ -59,7 +59,7 @@ namespace CadastroSeriesWindowsFormsSQLite
                     case LoginOutput.Succeeded:
                         this.textBoxUsuario.Text = "";
                         this.textBoxSenha.Text = "";
-                        formPrincipal = new FormPrincipal(this);
+                        formPrincipal = new FormPrincipal(this);                        
                         formPrincipal.Show();
                         this.Hide();
                         break;
@@ -78,5 +78,34 @@ namespace CadastroSeriesWindowsFormsSQLite
 
         }
 
+        private void textBoxUsuario_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelInsiraUsuario_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelSenha_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxSenha_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelInsiraSenha_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelUsuario_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

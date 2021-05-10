@@ -54,6 +54,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(281, 27);
             this.textBoxUsuario.TabIndex = 1;
+            this.textBoxUsuario.TextChanged += new System.EventHandler(this.textBoxUsuario_TextChanged);
             // 
             // textBoxSenha
             // 
@@ -62,6 +63,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxSenha.Size = new System.Drawing.Size(281, 27);
             this.textBoxSenha.TabIndex = 2;
             this.textBoxSenha.UseSystemPasswordChar = true;
+            this.textBoxSenha.TextChanged += new System.EventHandler(this.textBoxSenha_TextChanged);
             // 
             // labelUsuario
             // 
@@ -71,6 +73,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.labelUsuario.Size = new System.Drawing.Size(62, 20);
             this.labelUsuario.TabIndex = 3;
             this.labelUsuario.Text = "Usuário:";
+            this.labelUsuario.Click += new System.EventHandler(this.labelUsuario_Click);
             // 
             // labelSenha
             // 
@@ -80,6 +83,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.labelSenha.Size = new System.Drawing.Size(52, 20);
             this.labelSenha.TabIndex = 4;
             this.labelSenha.Text = "Senha:";
+            this.labelSenha.Click += new System.EventHandler(this.labelSenha_Click);
             // 
             // labelInsiraUsuario
             // 
@@ -91,6 +95,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.labelInsiraUsuario.TabIndex = 5;
             this.labelInsiraUsuario.Text = "Insira o usuário!";
             this.labelInsiraUsuario.Visible = false;
+            this.labelInsiraUsuario.Click += new System.EventHandler(this.labelInsiraUsuario_Click);
             // 
             // labelInsiraSenha
             // 
@@ -102,6 +107,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.labelInsiraSenha.TabIndex = 6;
             this.labelInsiraSenha.Text = "Insira a senha!";
             this.labelInsiraSenha.Visible = false;
+            this.labelInsiraSenha.Click += new System.EventHandler(this.labelInsiraSenha_Click);
             // 
             // FormLogin
             // 
