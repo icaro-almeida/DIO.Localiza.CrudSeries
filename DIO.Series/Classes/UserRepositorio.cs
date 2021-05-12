@@ -9,7 +9,7 @@ namespace DIO.Series
 {
     public class UserRepositorio
     {
-        private List<User> listaUsers = new List<User>();
+        public List<User> listaUsers { get; private set; }
         public string usuarioLogado_username;
         private Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -76,13 +76,13 @@ namespace DIO.Series
             else
                 return LoginOutput.WrongPassword;
 
-            //todo log into log file
+            logger.Trace($"Usuário {pUsername} fez login.");
             return LoginOutput.Succeeded;
         }
 
         public void ExecutaLogoff()
         {
-            logger.Trace($"Usuário {usuarioLogado_username} fez logoff;");
+            logger.Trace($"Usuário {usuarioLogado_username} fez logoff.");
             UsuarioLogado = null;
         }
 

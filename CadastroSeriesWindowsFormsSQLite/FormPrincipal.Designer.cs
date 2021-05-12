@@ -48,6 +48,10 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.labelUsuarioLogado = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.listViewUsers = new System.Windows.Forms.ListView();
+            this.columnHeaderId = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderUser = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderNome = new System.Windows.Forms.ColumnHeader();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +69,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.listViewUsers);
             this.tabPage1.Controls.Add(this.labelInsiraNome);
             this.tabPage1.Controls.Add(this.labelNome);
             this.tabPage1.Controls.Add(this.textBoxNome);
@@ -110,6 +115,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxNome.Name = "textBoxNome";
             this.textBoxNome.Size = new System.Drawing.Size(281, 27);
             this.textBoxNome.TabIndex = 15;
+            this.textBoxNome.TextChanged += new System.EventHandler(this.textBoxNome_TextChanged);
             // 
             // label2
             // 
@@ -168,6 +174,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxSenha.Size = new System.Drawing.Size(281, 27);
             this.textBoxSenha.TabIndex = 9;
             this.textBoxSenha.UseSystemPasswordChar = true;
+            this.textBoxSenha.TextChanged += new System.EventHandler(this.textBoxSenha_TextChanged);
             // 
             // textBoxUsuario
             // 
@@ -175,6 +182,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(281, 27);
             this.textBoxUsuario.TabIndex = 8;
+            this.textBoxUsuario.TextChanged += new System.EventHandler(this.textBoxUsuario_TextChanged);
             // 
             // buttonCadastrar
             // 
@@ -241,6 +249,37 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.label3.TabIndex = 19;
             this.label3.Text = "Última ação:";
             // 
+            // listViewUsers
+            // 
+            this.listViewUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderId,
+            this.columnHeaderUser,
+            this.columnHeaderNome});
+            this.listViewUsers.FullRowSelect = true;
+            this.listViewUsers.GridLines = true;
+            this.listViewUsers.HideSelection = false;
+            this.listViewUsers.Location = new System.Drawing.Point(640, 3);
+            this.listViewUsers.Name = "listViewUsers";
+            this.listViewUsers.Size = new System.Drawing.Size(287, 438);
+            this.listViewUsers.TabIndex = 18;
+            this.listViewUsers.UseCompatibleStateImageBehavior = false;
+            this.listViewUsers.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderId
+            // 
+            this.columnHeaderId.Text = "ID";
+            this.columnHeaderId.Width = 40;
+            // 
+            // columnHeaderUser
+            // 
+            this.columnHeaderUser.Text = "Usuário";
+            this.columnHeaderUser.Width = 120;
+            // 
+            // columnHeaderNome
+            // 
+            this.columnHeaderNome.Text = "Nome";
+            this.columnHeaderNome.Width = 120;
+            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -283,5 +322,9 @@ namespace CadastroSeriesWindowsFormsSQLite
         private System.Windows.Forms.TextBox textBoxNome;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListView listViewUsers;
+        private System.Windows.Forms.ColumnHeader columnHeaderId;
+        private System.Windows.Forms.ColumnHeader columnHeaderUser;
+        private System.Windows.Forms.ColumnHeader columnHeaderNome;
     }
 }

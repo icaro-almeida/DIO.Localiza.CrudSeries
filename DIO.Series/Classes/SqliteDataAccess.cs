@@ -26,7 +26,6 @@ namespace DIO.Series
             using (IDbConnection conn = new SQLiteConnection(LoadConnectionString()))
             {
                 conn.Execute("insert into Usuarios (Nome, Username, Senha, Salt) values (@Nome, @Username, @Senha, @Salt)", pUser);
-                //todo tratar exceção de usuário único
             }
         }
 
