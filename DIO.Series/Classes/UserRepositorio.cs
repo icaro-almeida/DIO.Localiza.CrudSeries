@@ -50,7 +50,7 @@ namespace DIO.Series
             }
             else
             {
-                //Como o nome de usuário é único no banco de dados, pode-se retornar o primeiro
+                //Como o nome de usuário é único no banco de dados, pode-se retornar o primeiro encontrado
                 return resultsList[0];
             }
         }
@@ -66,18 +66,20 @@ namespace DIO.Series
             bool senhaCorreta = false;
 
             usuario = BuscaUsuario(pUsername);
-            if (usuario != null)            
-                senhaCorreta = Password.CompararSenhas(pSenha, usuario.Salt, usuario.Senha);            
+            if (usuario != null)
+                senhaCorreta = Password.CompararSenhas(pSenha, usuario.Salt, usuario.Senha);
             else
                 return LoginOutput.UserNotFound;
 
-            if (senhaCorreta)            
-                this.UsuarioLogado = usuario;            
+            if (senhaCorreta) //faz login
+            {
+                this.UsuarioLogado = usuario;
+                logger.Trace($"Usuário {pUsername} fez login.");
+                return LoginOutput.Succeeded;
+            }
             else
                 return LoginOutput.WrongPassword;
 
-            logger.Trace($"Usuário {pUsername} fez login.");
-            return LoginOutput.Succeeded;
         }
 
         public void ExecutaLogoff()
@@ -86,12 +88,18 @@ namespace DIO.Series
             UsuarioLogado = null;
         }
 
-        public void InsereUsuario(User pUsuarioNovo)
+        public bool InsereUsuario(User pUsuarioNovo)
         {
             //inserts a new user into DB
-            SqliteDataAccess.SaveUser(pUsuarioNovo);            
+            SqliteDataAccess.SaveUser(pUsuarioNovo);
             // loads from db into list
             listaUsers = SqliteDataAccess.LoadUsers();
+
+            //todo - analisar possivel melhoria ou sobrecarga do método BuscaUsuario, ex: retornar boolean
+            if (BuscaUsuario(pUsuarioNovo.Username) != null)
+                return true;
+            else
+                return false;
         }
 
     }

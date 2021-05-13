@@ -53,7 +53,7 @@ namespace CadastroSeriesWindowsFormsSQLite
         private void buttonCadastrar_Click(object sender, EventArgs e)
         {
             bool fieldsAreFilled = true;
-            //verifica se nome foi inserido
+            //verifica se nome foi inserido e informa ao usuário
             if (textBoxNome.Text.Equals(""))
             {
                 this.labelInsiraNome.Text = "Insira o nome!";
@@ -63,17 +63,18 @@ namespace CadastroSeriesWindowsFormsSQLite
             else
                 this.labelInsiraNome.Visible = false;
 
-            //verifica se usuario foi inserido
-            if (textBoxUsuario.Text.Equals(""))
-            {
+            
+            if (textBoxUsuario.Text.Equals("")) // se usuario NÃO foi digitado
+            { //informa ao usuário
                 this.labelInsiraUsuario.Text = "Insira o usuário!";
                 this.labelInsiraUsuario.Visible = true;
                 fieldsAreFilled = false;
             }
-            else if (usernameAvailable) //evita a remoção da mensagem de usuário indisponível
+            //todo - melhorar esta analise... está um pouco confusa
+            else if (usernameAvailable) //só remove mensagem de usuário indisponível se username estiver livre
                 this.labelInsiraUsuario.Visible = false;
 
-            //verifica se a senha foi inserida
+            //verifica se a senha foi inserida e informa ao usuário
             if (textBoxSenha.Text.Equals(""))
             {
                 this.labelInsiraSenha.Text = "Insira a senha!";
@@ -86,17 +87,26 @@ namespace CadastroSeriesWindowsFormsSQLite
 
             if (usernameAvailable && fieldsAreFilled)
             {
-                //add - fazer verificação de usuario disponivel enquanto digita
-                if (formLogin.repoUsuarios.BuscaUsuario(textBoxUsuario.Text) == null)
+                //todo - verificar necessidade de retestar usuario disponivel
+                if (formLogin.repoUsuarios.BuscaUsuario(textBoxUsuario.Text) == null) //se username está disponível
                 {
+                    //cadastra novo usuário
                     User novoUsuario = new User(textBoxNome.Text, textBoxUsuario.Text, textBoxSenha.Text);
-                    formLogin.repoUsuarios.InsereUsuario(novoUsuario);
-                    ResetTabUsuarios();
-                    this.labelStatus.Text = $"Usuário {novoUsuario.Username} inserido com sucesso!";
-                    logger.Trace($"Usuário {novoUsuario.Username} inserido com sucesso!");
-                    AtualizaListViewUsers();
+                    
+                    if (formLogin.repoUsuarios.InsereUsuario(novoUsuario)) //se inseriu usuário com sucesso
+                    {
+                        ResetTabUsuarios();
+                        this.labelStatus.Text = $"Usuário {novoUsuario.Username} inserido com sucesso!";
+                        logger.Trace($"Usuário {novoUsuario.Username} inserido com sucesso!");
+                        AtualizaListViewUsers();
+                    }
+                    else //se não inseriu usuário novo
+                    {
+                        this.labelStatus.Text = $"Erro ao inserir usuário {novoUsuario.Username}!";
+                        logger.Trace($"Erro ao inserir usuário {novoUsuario.Username}!");
+                    }
                 }
-                else
+                else //se username NÃO está disponível
                 {
                     this.labelInsiraUsuario.ForeColor = Color.Red;
                     this.labelInsiraUsuario.Text = "Usuário já cadastrado!";
@@ -108,6 +118,7 @@ namespace CadastroSeriesWindowsFormsSQLite
 
         private void ResetTabUsuarios()
         {
+            //limpa campos e mensagens ao usuário após inserção de novo usuário
             this.labelInsiraNome.Visible = false;
             this.labelInsiraUsuario.Visible = false;
             this.labelInsiraSenha.Visible = false;
@@ -118,21 +129,22 @@ namespace CadastroSeriesWindowsFormsSQLite
 
         private void textBoxUsuario_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxUsuario.Text == "")
+            if (textBoxUsuario.Text == "") //se nao inseriu username
             {
                 usernameAvailable = false;
                 this.labelInsiraUsuario.Visible = false;
                 return;
             }
-            if (formLogin.repoUsuarios.BuscaUsuario(textBoxUsuario.Text) == null)
-            {
+
+            if (formLogin.repoUsuarios.BuscaUsuario(textBoxUsuario.Text) == null) //se username está disponível
+            { //informa ao usuário enquanto ele digita
                 usernameAvailable = true;
                 this.labelInsiraUsuario.ForeColor = Color.Green;
                 this.labelInsiraUsuario.Text = $"Usuário {textBoxUsuario.Text} disponível!";
                 this.labelInsiraUsuario.Visible = true;
             }
-            else
-            {
+            else //se username NÃO está disponível
+            { //informa ao usuário enquanto ele digita
                 usernameAvailable = false;
                 this.labelInsiraUsuario.ForeColor = Color.Red;
                 this.labelInsiraUsuario.Text = $"Usuário {textBoxUsuario.Text} indisponível!";
@@ -142,16 +154,16 @@ namespace CadastroSeriesWindowsFormsSQLite
 
         private void textBoxNome_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxNome.Text != "")
-            {
+            if (textBoxNome.Text != "") //se o nome foi preenchido
+            { //remove mensagem ao usuário
                 labelInsiraNome.Visible = false;
             }
         }
 
         private void textBoxSenha_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxSenha.Text != "")
-            {
+            if (textBoxSenha.Text != "") //se a senha foi preenchida
+            { //remove mensagem ao usuário
                 labelInsiraSenha.Visible = false;
             }
         }
