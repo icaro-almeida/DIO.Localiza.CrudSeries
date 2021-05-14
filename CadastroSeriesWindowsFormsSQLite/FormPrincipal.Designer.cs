@@ -31,6 +31,10 @@ namespace CadastroSeriesWindowsFormsSQLite
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.listViewUsers = new System.Windows.Forms.ListView();
+            this.columnHeaderId = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderUser = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderNome = new System.Windows.Forms.ColumnHeader();
             this.labelInsiraNome = new System.Windows.Forms.Label();
             this.labelNome = new System.Windows.Forms.Label();
             this.textBoxNome = new System.Windows.Forms.TextBox();
@@ -41,26 +45,39 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.labelUsuario = new System.Windows.Forms.Label();
             this.textBoxSenha = new System.Windows.Forms.TextBox();
             this.textBoxUsuario = new System.Windows.Forms.TextBox();
-            this.buttonCadastrar = new System.Windows.Forms.Button();
+            this.buttonCadastrarUsuario = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBoxExcluido = new System.Windows.Forms.CheckBox();
+            this.listViewCadastros = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.numericUpDownAno = new System.Windows.Forms.NumericUpDown();
+            this.buttonAtualizarSerieFilme = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.radioButtonFilme = new System.Windows.Forms.RadioButton();
+            this.radioButtonSerie = new System.Windows.Forms.RadioButton();
+            this.richTextBoxDescricao = new System.Windows.Forms.RichTextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxTitulo = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBoxGenero = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.labelUsuarioLogado = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.listViewUsers = new System.Windows.Forms.ListView();
-            this.columnHeaderId = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderUser = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderNome = new System.Windows.Forms.ColumnHeader();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAno)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 44);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -80,7 +97,7 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.tabPage1.Controls.Add(this.labelUsuario);
             this.tabPage1.Controls.Add(this.textBoxSenha);
             this.tabPage1.Controls.Add(this.textBoxUsuario);
-            this.tabPage1.Controls.Add(this.buttonCadastrar);
+            this.tabPage1.Controls.Add(this.buttonCadastrarUsuario);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -88,6 +105,37 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Usuários";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listViewUsers
+            // 
+            this.listViewUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderId,
+            this.columnHeaderUser,
+            this.columnHeaderNome});
+            this.listViewUsers.FullRowSelect = true;
+            this.listViewUsers.GridLines = true;
+            this.listViewUsers.HideSelection = false;
+            this.listViewUsers.Location = new System.Drawing.Point(640, 3);
+            this.listViewUsers.Name = "listViewUsers";
+            this.listViewUsers.Size = new System.Drawing.Size(287, 438);
+            this.listViewUsers.TabIndex = 18;
+            this.listViewUsers.UseCompatibleStateImageBehavior = false;
+            this.listViewUsers.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderId
+            // 
+            this.columnHeaderId.Text = "ID";
+            this.columnHeaderId.Width = 40;
+            // 
+            // columnHeaderUser
+            // 
+            this.columnHeaderUser.Text = "Usuário";
+            this.columnHeaderUser.Width = 120;
+            // 
+            // columnHeaderNome
+            // 
+            this.columnHeaderNome.Text = "Nome";
+            this.columnHeaderNome.Width = 120;
             // 
             // labelInsiraNome
             // 
@@ -184,34 +232,198 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxUsuario.TabIndex = 8;
             this.textBoxUsuario.TextChanged += new System.EventHandler(this.textBoxUsuario_TextChanged);
             // 
-            // buttonCadastrar
+            // buttonCadastrarUsuario
             // 
-            this.buttonCadastrar.Location = new System.Drawing.Point(151, 308);
-            this.buttonCadastrar.Name = "buttonCadastrar";
-            this.buttonCadastrar.Size = new System.Drawing.Size(94, 29);
-            this.buttonCadastrar.TabIndex = 7;
-            this.buttonCadastrar.Text = "Cadastrar";
-            this.buttonCadastrar.UseVisualStyleBackColor = true;
-            this.buttonCadastrar.Click += new System.EventHandler(this.buttonCadastrar_Click);
+            this.buttonCadastrarUsuario.Location = new System.Drawing.Point(151, 308);
+            this.buttonCadastrarUsuario.Name = "buttonCadastrarUsuario";
+            this.buttonCadastrarUsuario.Size = new System.Drawing.Size(94, 29);
+            this.buttonCadastrarUsuario.TabIndex = 7;
+            this.buttonCadastrarUsuario.Text = "Cadastrar";
+            this.buttonCadastrarUsuario.UseVisualStyleBackColor = true;
+            this.buttonCadastrarUsuario.Click += new System.EventHandler(this.buttonCadastrar_Click);
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBoxExcluido);
+            this.tabPage2.Controls.Add(this.listViewCadastros);
+            this.tabPage2.Controls.Add(this.numericUpDownAno);
+            this.tabPage2.Controls.Add(this.buttonAtualizarSerieFilme);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.radioButtonFilme);
+            this.tabPage2.Controls.Add(this.radioButtonSerie);
+            this.tabPage2.Controls.Add(this.richTextBoxDescricao);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.textBoxTitulo);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.comboBoxGenero);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(930, 444);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Cadastrar Séries";
+            this.tabPage2.Text = "Séries e Filmes";
+            this.tabPage2.ToolTipText = "Cadastrar ou atualizar séries e filmes";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // checkBoxExcluido
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(930, 444);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Cadastrar Filmes";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.checkBoxExcluido.AutoSize = true;
+            this.checkBoxExcluido.Location = new System.Drawing.Point(23, 376);
+            this.checkBoxExcluido.Name = "checkBoxExcluido";
+            this.checkBoxExcluido.Size = new System.Drawing.Size(87, 24);
+            this.checkBoxExcluido.TabIndex = 20;
+            this.checkBoxExcluido.Text = "Excluído";
+            this.checkBoxExcluido.UseVisualStyleBackColor = true;
+            // 
+            // listViewCadastros
+            // 
+            this.listViewCadastros.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.listViewCadastros.FullRowSelect = true;
+            this.listViewCadastros.GridLines = true;
+            this.listViewCadastros.HideSelection = false;
+            this.listViewCadastros.Location = new System.Drawing.Point(490, 58);
+            this.listViewCadastros.MultiSelect = false;
+            this.listViewCadastros.Name = "listViewCadastros";
+            this.listViewCadastros.Size = new System.Drawing.Size(427, 383);
+            this.listViewCadastros.TabIndex = 19;
+            this.listViewCadastros.UseCompatibleStateImageBehavior = false;
+            this.listViewCadastros.View = System.Windows.Forms.View.Details;
+            this.listViewCadastros.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewCadastros_ItemSelectionChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Gênero";
+            this.columnHeader1.Width = 110;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Título";
+            this.columnHeader2.Width = 230;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Ano";
+            this.columnHeader3.Width = 80;
+            // 
+            // numericUpDownAno
+            // 
+            this.numericUpDownAno.Location = new System.Drawing.Point(116, 151);
+            this.numericUpDownAno.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDownAno.Name = "numericUpDownAno";
+            this.numericUpDownAno.Size = new System.Drawing.Size(150, 27);
+            this.numericUpDownAno.TabIndex = 12;
+            // 
+            // buttonAtualizarSerieFilme
+            // 
+            this.buttonAtualizarSerieFilme.Enabled = false;
+            this.buttonAtualizarSerieFilme.Location = new System.Drawing.Point(185, 371);
+            this.buttonAtualizarSerieFilme.Name = "buttonAtualizarSerieFilme";
+            this.buttonAtualizarSerieFilme.Size = new System.Drawing.Size(160, 29);
+            this.buttonAtualizarSerieFilme.TabIndex = 11;
+            this.buttonAtualizarSerieFilme.Text = "Atualizar";
+            this.buttonAtualizarSerieFilme.UseVisualStyleBackColor = true;
+            this.buttonAtualizarSerieFilme.Click += new System.EventHandler(this.buttonAtualizarSerieFilme_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(23, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 20);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Tipo:";
+            // 
+            // radioButtonFilme
+            // 
+            this.radioButtonFilme.AutoSize = true;
+            this.radioButtonFilme.Location = new System.Drawing.Point(185, 18);
+            this.radioButtonFilme.Name = "radioButtonFilme";
+            this.radioButtonFilme.Size = new System.Drawing.Size(66, 24);
+            this.radioButtonFilme.TabIndex = 9;
+            this.radioButtonFilme.TabStop = true;
+            this.radioButtonFilme.Text = "Filme";
+            this.radioButtonFilme.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSerie
+            // 
+            this.radioButtonSerie.AutoSize = true;
+            this.radioButtonSerie.Location = new System.Drawing.Point(116, 18);
+            this.radioButtonSerie.Name = "radioButtonSerie";
+            this.radioButtonSerie.Size = new System.Drawing.Size(63, 24);
+            this.radioButtonSerie.TabIndex = 8;
+            this.radioButtonSerie.TabStop = true;
+            this.radioButtonSerie.Text = "Série";
+            this.radioButtonSerie.UseVisualStyleBackColor = true;
+            this.radioButtonSerie.CheckedChanged += new System.EventHandler(this.radioButtonSerie_CheckedChanged);
+            // 
+            // richTextBoxDescricao
+            // 
+            this.richTextBoxDescricao.Location = new System.Drawing.Point(116, 194);
+            this.richTextBoxDescricao.Name = "richTextBoxDescricao";
+            this.richTextBoxDescricao.Size = new System.Drawing.Size(338, 120);
+            this.richTextBoxDescricao.TabIndex = 7;
+            this.richTextBoxDescricao.Text = "";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(23, 194);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(77, 20);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Descrição:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 153);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(39, 20);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Ano:";
+            // 
+            // textBoxTitulo
+            // 
+            this.textBoxTitulo.Location = new System.Drawing.Point(116, 102);
+            this.textBoxTitulo.Name = "textBoxTitulo";
+            this.textBoxTitulo.Size = new System.Drawing.Size(338, 27);
+            this.textBoxTitulo.TabIndex = 3;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(23, 109);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 20);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Título:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(23, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 20);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Gênero:";
+            // 
+            // comboBoxGenero
+            // 
+            this.comboBoxGenero.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxGenero.FormattingEnabled = true;
+            this.comboBoxGenero.Location = new System.Drawing.Point(116, 58);
+            this.comboBoxGenero.Name = "comboBoxGenero";
+            this.comboBoxGenero.Size = new System.Drawing.Size(151, 28);
+            this.comboBoxGenero.TabIndex = 0;
             // 
             // label1
             // 
@@ -249,37 +461,6 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.label3.TabIndex = 19;
             this.label3.Text = "Última ação:";
             // 
-            // listViewUsers
-            // 
-            this.listViewUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderId,
-            this.columnHeaderUser,
-            this.columnHeaderNome});
-            this.listViewUsers.FullRowSelect = true;
-            this.listViewUsers.GridLines = true;
-            this.listViewUsers.HideSelection = false;
-            this.listViewUsers.Location = new System.Drawing.Point(640, 3);
-            this.listViewUsers.Name = "listViewUsers";
-            this.listViewUsers.Size = new System.Drawing.Size(287, 438);
-            this.listViewUsers.TabIndex = 18;
-            this.listViewUsers.UseCompatibleStateImageBehavior = false;
-            this.listViewUsers.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderId
-            // 
-            this.columnHeaderId.Text = "ID";
-            this.columnHeaderId.Width = 40;
-            // 
-            // columnHeaderUser
-            // 
-            this.columnHeaderUser.Text = "Usuário";
-            this.columnHeaderUser.Width = 120;
-            // 
-            // columnHeaderNome
-            // 
-            this.columnHeaderNome.Text = "Nome";
-            this.columnHeaderNome.Width = 120;
-            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -291,11 +472,14 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormPrincipal";
-            this.Text = "FormPrincipal";
+            this.Text = "CRUD Séries e Filmes";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPrincipal_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAno)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,7 +492,6 @@ namespace CadastroSeriesWindowsFormsSQLite
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelUsuarioLogado;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelInsiraSenha;
         private System.Windows.Forms.Label labelInsiraUsuario;
@@ -316,7 +499,7 @@ namespace CadastroSeriesWindowsFormsSQLite
         private System.Windows.Forms.Label labelUsuario;
         private System.Windows.Forms.TextBox textBoxSenha;
         private System.Windows.Forms.TextBox textBoxUsuario;
-        private System.Windows.Forms.Button buttonCadastrar;
+        private System.Windows.Forms.Button buttonCadastrarUsuario;
         private System.Windows.Forms.Label labelInsiraNome;
         private System.Windows.Forms.Label labelNome;
         private System.Windows.Forms.TextBox textBoxNome;
@@ -326,5 +509,22 @@ namespace CadastroSeriesWindowsFormsSQLite
         private System.Windows.Forms.ColumnHeader columnHeaderId;
         private System.Windows.Forms.ColumnHeader columnHeaderUser;
         private System.Windows.Forms.ColumnHeader columnHeaderNome;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBoxGenero;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RadioButton radioButtonFilme;
+        private System.Windows.Forms.RadioButton radioButtonSerie;
+        private System.Windows.Forms.RichTextBox richTextBoxDescricao;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBoxTitulo;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button buttonAtualizarSerieFilme;
+        private System.Windows.Forms.ListView listViewCadastros;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.NumericUpDown numericUpDownAno;
+        private System.Windows.Forms.CheckBox checkBoxExcluido;
     }
 }

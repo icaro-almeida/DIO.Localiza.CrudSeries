@@ -16,7 +16,7 @@ namespace DIO.Series
 		public string Salt { get; private set; }
 
 		
-
+		//construtor para uso com o Dapper para load do banco de dados
 		public User(Int64 Id, String Nome,String Username,String Senha, String Salt)
 		{
 			this.Id = Id;

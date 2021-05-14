@@ -17,7 +17,7 @@ namespace CadastroSeriesWindowsFormsSQLite
     public partial class FormLogin : Form
     {
         internal UserRepositorio repoUsuarios = new UserRepositorio();
-        internal SerieRepositorio repoSeries = new SerieRepositorio();
+        
         private Logger logger = LogManager.GetCurrentClassLogger();
 
         private FormPrincipal formPrincipal;

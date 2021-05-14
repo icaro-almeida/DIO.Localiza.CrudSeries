@@ -5,35 +5,48 @@ namespace DIO.Series
 {
 	public class SerieRepositorio : IRepositorio<Serie>
 	{
-        private List<Serie> listaSerie = new List<Serie>();
+        public List<Serie> listaDeSeries { get; private set; }
+
+		public SerieRepositorio()
+		{
+			// loads from db into list
+			listaDeSeries = SqliteDataAccess.LoadSeries();
+		}
+
+		public void RecarregaLista()
+		{
+			// reloads from db into list
+			listaDeSeries = SqliteDataAccess.LoadSeries();
+		}
+
 		public void Atualiza(int id, Serie objeto)
 		{
-			listaSerie[id] = objeto;
+			listaDeSeries[id] = objeto;
 		}
 
 		public void Exclui(int id)
 		{
-			listaSerie[id].Excluir();
+			listaDeSeries[id].Excluir();
 		}
 
 		public void Insere(Serie objeto)
 		{
-			listaSerie.Add(objeto);
+			listaDeSeries.Add(objeto);
 		}
 
 		public List<Serie> Lista()
 		{
-			return listaSerie;
+			return listaDeSeries;
 		}
 
 		public int ProximoId()
 		{
-			return listaSerie.Count;
+			return listaDeSeries.Count;
 		}
 
 		public Serie RetornaPorId(int id)
 		{
-			return listaSerie[id];
+			return listaDeSeries[id];
 		}
 	}
 }

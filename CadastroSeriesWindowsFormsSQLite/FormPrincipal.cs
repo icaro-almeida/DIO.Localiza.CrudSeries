@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +20,10 @@ namespace CadastroSeriesWindowsFormsSQLite
         private Logger logger = LogManager.GetCurrentClassLogger();
         private bool usernameAvailable = false;
 
+        internal SerieRepositorio repoSeries = new SerieRepositorio();
+        internal FilmeRepositorio repoFilmes = new FilmeRepositorio();
+
+        private long idSelecionado = 0;
 
         public FormPrincipal(FormLogin pFormLogin)
         {
@@ -26,6 +32,11 @@ namespace CadastroSeriesWindowsFormsSQLite
             //preenche label com o username do usuario logado
             this.labelUsuarioLogado.Text = formLogin.repoUsuarios.usuarioLogado_username;
             this.labelStatus.Text = $"Usuário {this.labelUsuarioLogado.Text} logado com sucesso!";
+
+            //Preenche combo box de gênero
+            comboBoxGenero.DataSource = Listar(typeof(Genero));
+            comboBoxGenero.DisplayMember = "Value";
+            comboBoxGenero.ValueMember = "Key";
 
             AtualizaListViewUsers();
         }
@@ -42,6 +53,38 @@ namespace CadastroSeriesWindowsFormsSQLite
                 lvi.Tag = user; //armazena objeto completo caso precise de detalhes (precisa usar cast do tipo User)
                 listViewUsers.Items.Add(lvi);
             }
+        }
+
+        private void AtualizaListViewCadastros()
+        {
+            if (radioButtonFilme.Checked)
+            {
+                repoFilmes.RecarregaLista();
+
+                //https://www.youtube.com/watch?v=Q8XQg8PoB9U
+                listViewCadastros.Items.Clear();
+                foreach (Filme filme in repoFilmes.listaDeFilmes)
+                {
+                    var row = new string[] { ObterDescricao(filme.Genero), filme.Titulo.ToString(), filme.Ano.ToString() };
+                    var lvi = new ListViewItem(row);
+                    lvi.Tag = filme; //armazena objeto completo caso precise de detalhes (precisa usar cast do tipo User)
+                    listViewCadastros.Items.Add(lvi);
+                }
+            }
+            else if (radioButtonSerie.Checked)
+            {
+                repoSeries.RecarregaLista();
+
+                //https://www.youtube.com/watch?v=Q8XQg8PoB9U
+                listViewCadastros.Items.Clear();
+                foreach (Serie serie in repoSeries.listaDeSeries)
+                {
+                    var row = new string[] { ObterDescricao(serie.Genero), serie.Titulo.ToString(), serie.Ano.ToString() };
+                    var lvi = new ListViewItem(row);
+                    lvi.Tag = serie; //armazena objeto completo caso precise de detalhes (precisa usar cast do tipo User)
+                    listViewCadastros.Items.Add(lvi);
+                }
+            }            
         }
 
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
@@ -127,6 +170,42 @@ namespace CadastroSeriesWindowsFormsSQLite
             this.textBoxSenha.Text = "";
         }
 
+        /// <summary>
+        /// Obtém a descrição de um determinado Enumerador.
+        /// </summary>
+        /// <param name="valor">Enumerador que terá a descrição obtida.</param>
+        /// <returns>String com a descrição do Enumerador.</returns>
+        /// https://imasters.com.br/dotnet/populando-um-combobox-com-enumeradores
+        public static string ObterDescricao(Enum valor)
+        {
+            FieldInfo fieldInfo = valor.GetType().GetField(valor.ToString());
+
+            DescriptionAttribute[] atributos = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            return atributos.Length > 0 ? atributos[0].Description ?? "Nulo" : valor.ToString();
+        }
+
+        /// <summary>
+        /// Retorna uma lista com os valores de um determinado enumerador.
+        /// </summary>
+        /// <param name="tipo">Enumerador que terá os valores listados.</param>
+        /// <returns>Lista com os valores do Enumerador.</returns>
+        /// https://imasters.com.br/dotnet/populando-um-combobox-com-enumeradores
+        public static IList Listar(Type tipo)
+        {
+            ArrayList lista = new ArrayList();
+            if (tipo != null)
+            {
+                Array enumValores = Enum.GetValues(tipo);
+                foreach (Enum valor in enumValores)
+                {
+                    lista.Add(new KeyValuePair<Enum, string>(valor, ObterDescricao(valor)));
+                }
+            }
+
+            return lista;
+        }
+
         private void textBoxUsuario_TextChanged(object sender, EventArgs e)
         {
             if (textBoxUsuario.Text == "") //se nao inseriu username
@@ -167,5 +246,60 @@ namespace CadastroSeriesWindowsFormsSQLite
                 labelInsiraSenha.Visible = false;
             }
         }
-    }
-}
+
+        private void radioButtonSerie_CheckedChanged(object sender, EventArgs e)
+        {
+            AtualizaListViewCadastros();
+        }
+
+        private void listViewCadastros_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (listViewCadastros.SelectedItems.Count == 1)
+            {
+                buttonAtualizarSerieFilme.Enabled = true;
+
+                EntidadeBase itemSelecionado = (EntidadeBase)listViewCadastros.SelectedItems[0].Tag;
+
+                idSelecionado = itemSelecionado.Id;
+
+                comboBoxGenero.SelectedIndex = (int)itemSelecionado.Genero;
+                textBoxTitulo.Text = itemSelecionado.Titulo;
+                numericUpDownAno.Value = itemSelecionado.Ano;
+                richTextBoxDescricao.Text = itemSelecionado.Descricao;
+                checkBoxExcluido.Checked = itemSelecionado.Excluido;
+            }
+            else if (listViewCadastros.SelectedItems.Count == 0)
+            {
+                buttonAtualizarSerieFilme.Enabled = false;
+            }         
+        }
+
+        private void buttonAtualizarSerieFilme_Click(object sender, EventArgs e)
+        {
+            if (radioButtonFilme.Checked)
+            {
+                var novoFilme = new Filme(idSelecionado,
+                 Convert.ToInt64(comboBoxGenero.SelectedIndex),
+                 textBoxTitulo.Text,
+                 richTextBoxDescricao.Text,
+                 (int)numericUpDownAno.Value,
+                 Convert.ToInt64(checkBoxExcluido.Checked));
+                SqliteDataAccess.UpdateFilme(novoFilme);
+            }
+            else if (radioButtonSerie.Checked)
+            {
+                var novaSerie = new Serie(idSelecionado,
+                 Convert.ToInt64(comboBoxGenero.SelectedIndex),
+                 textBoxTitulo.Text,
+                 richTextBoxDescricao.Text,
+                 (int)numericUpDownAno.Value,
+                 Convert.ToInt64(checkBoxExcluido.Checked));
+                SqliteDataAccess.UpdateSerie(novaSerie);
+            }
+
+            AtualizaListViewCadastros();
+        }
+
+    }//fim da classe
+
+}//fim do namespace
